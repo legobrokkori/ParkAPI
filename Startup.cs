@@ -1,3 +1,4 @@
+using AutoMapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using ParkyAPI.Data;
 using ParkyAPI.Repository.IRepository;
+using ParkyAPI.Mapper;
 
 namespace ParkyAPI
 {
@@ -31,6 +33,7 @@ namespace ParkyAPI
             services.AddControllers();
             services.AddDbContext<ApplicationDbContext>(x => x.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
             services.AddScoped<INationalParkRepository, INationalParkRepository>();
+            services.AddAutoMapper(typeof(ParkyMappings));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
