@@ -84,5 +84,21 @@ namespace ParkyAPI.Controllers
 
             return NoContent();
         }
+
+        [HttpDelete("{id}", Name = "DeleteNationalPark")]
+        public async Task<IActionResult> DeleteNationalPark(int id)
+        {
+            if (await _repo.NationalParkExists(id) == false)
+                return NotFound();
+            
+            var nationalPark = await _repo.GetNationalPark(id);
+            if (await _repo.DeleteNationalPark(nationalPark) == false)
+            {
+                ModelState.AddModelError("", $"Something went wrong when deleting the record {nationalPark.Name}");
+                return StatusCode(500, ModelState);
+            }
+
+            return NoContent();
+        }
     }
 }
