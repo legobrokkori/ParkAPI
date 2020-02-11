@@ -12,6 +12,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using ParkyAPI.Data;
+using ParkyAPI.Repository.IRepository;
 
 namespace ParkyAPI
 {
@@ -29,6 +30,7 @@ namespace ParkyAPI
         {
             services.AddControllers();
             services.AddDbContext<ApplicationDbContext>(x => x.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddScoped<INationalParkRepository, INationalParkRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
