@@ -13,6 +13,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using ParkyAPI.Data;
+using ParkyAPI.Repository;
 using ParkyAPI.Repository.IRepository;
 using ParkyAPI.Mapper;
 
@@ -32,7 +33,7 @@ namespace ParkyAPI
         {
             services.AddControllers();
             services.AddDbContext<ApplicationDbContext>(x => x.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddScoped<INationalParkRepository, INationalParkRepository>();
+            services.AddScoped<INationalParkRepository, NationalParkRepository>();
             services.AddAutoMapper(typeof(ParkyMappings));
         }
 
