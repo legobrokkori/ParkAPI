@@ -43,7 +43,6 @@ namespace ParkyAPI.Repository
         }
         public async Task<bool> DeleteNationalPark(NationalPark nationalPark)
         {
-
             _db.NationalParks.Remove(nationalPark);
             return await Save();
         }
