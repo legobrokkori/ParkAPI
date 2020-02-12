@@ -12,6 +12,7 @@ using ParkyAPI.Models;
 namespace ParkyAPI.Controllers
 {
     [ApiController]
+    [ProducesResponseType(400)]
     [Route("api/[controller]")]
     public class NationalParksController : Controller
     {
@@ -25,6 +26,7 @@ namespace ParkyAPI.Controllers
         }
 
         [HttpGet]
+        [ProducesResponseType(200, Type = typeof(ICollection<NationalParkDto>))]
         public async Task<IActionResult> GetNationalParks()
         {
             var parks = await _repo.GetNationalParks();
@@ -36,6 +38,8 @@ namespace ParkyAPI.Controllers
         }
 
         [HttpGet("{id}", Name = "GetNationalPark")]
+        [ProducesResponseType(200, Type = typeof(NationalParkDto))]
+        [ProducesResponseType(404)]
         public async Task<IActionResult> GetNationalPark(int id)
         {
             var park = await _repo.GetNationalPark(id);
@@ -47,6 +51,9 @@ namespace ParkyAPI.Controllers
         }
 
         [HttpPost]
+        [ProducesResponseType(201, Type = typeof(NationalParkDto))]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(500)]
         public async Task<IActionResult> CreateNationalPark([FromBody] NationalParkDto dto)
         {
             if (dto == null)
@@ -69,6 +76,9 @@ namespace ParkyAPI.Controllers
         }
 
         [HttpPatch("{id}", Name = "UpdateNationalPark")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(500)]
         public async Task<IActionResult> UpdateNationalPark(int id, [FromBody] NationalParkDto dto)
         {
             if (dto == null || id != dto.Id)
@@ -86,6 +96,10 @@ namespace ParkyAPI.Controllers
         }
 
         [HttpDelete("{id}", Name = "DeleteNationalPark")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(409)]
+        [ProducesResponseType(500)]
         public async Task<IActionResult> DeleteNationalPark(int id)
         {
             if (await _repo.NationalParkExists(id) == false)
